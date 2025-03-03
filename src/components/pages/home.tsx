@@ -9,7 +9,7 @@ const Home: React.FC = () => {
   return (
     <>
       <main 
-        style={{ border: "3px solid white" }}>
+        style={{ width: "100vw", border: "3px solid white" }}>
         <div
           className="wrapper d-flex"
         >
