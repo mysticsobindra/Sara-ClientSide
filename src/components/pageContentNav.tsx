@@ -1,7 +1,7 @@
 
 const PageContentNav = () => {
     return (
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <nav className="navbar navbar-expand-lg navbar-light bg-light"  style={{ border: "3px solid white " }} >
         <header>
           <div className="container-fluid header-container">
             <div className="menu-logo-wrap d-flex">

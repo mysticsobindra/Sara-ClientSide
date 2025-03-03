@@ -10,8 +10,8 @@ import ListTable from '../ListTable';
 
 const PageContent: React.FC = () => {
     return (
-        <div id="content" className="fluid">
-        <PageContentNav />
+        <div id="content" className="fluid" >
+        <PageContentNav/>
         <div className="body-content ">
           <div className="wallet-container tab-container">
             <BoxContainer />
