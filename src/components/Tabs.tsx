@@ -1,7 +1,4 @@
-
 const Tabs = () => {
-
-
     return (
         <div className="tab-head">
             <button className="tab active" data-target="#tab1">Your Referrals</button>

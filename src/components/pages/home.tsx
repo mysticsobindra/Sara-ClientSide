@@ -8,8 +8,7 @@ import Notice from "../Modal/Notice";
 const Home: React.FC = () => {
   return (
     <>
-      <main 
-        style={{ width: "100vw", border: "3px solid white" }}>
+      <main >
         <div
           className="wrapper d-flex"
         >

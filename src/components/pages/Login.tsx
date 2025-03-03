@@ -1,38 +1,20 @@
 import React, { useState } from "react";
 import "../css/login.css";
-import axios from "axios";
+import login from "../api/login";
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState("test1@gmail.com");
   const [password, setPassword] = useState("test1");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Email:", email);
     console.log("Password:", password);
-    axios
-      .post(
-        "http://localhost:3000/login",
-        {
-          email: email,
-          password: password,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then((response) => {
-        console.log("Login successful:", response.data);
-      })
-      .catch((error) => {
-        console.error("There was an error logging in:", error);
-      });
+    await login(email, password);
   };
 
   return (
-    <div>
+    <div className="login-container">
       <form onSubmit={handleSubmit} className="login-form-container">
         <label className="login-form-label">
           Email:

@@ -1,5 +1,5 @@
-import axios from "axios";
 import { useState } from "react";
+import { register } from "../api/register";
 
 const Register = () => {
   const [email, setEmail] = useState("test5@gmail.com");
@@ -11,25 +11,7 @@ const Register = () => {
     console.log("Email:", email);
     console.log("Password:", password);
     console.log("Referral", referralCode);
-    axios
-      .post(
-        `http://localhost:3000/register?referralCode=${referralCode}`,
-        {
-          email: email,
-          password: password,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then((response) => {
-        console.log("Login successful:", response.data);
-      })
-      .catch((error) => {
-        console.error("There was an error logging in:", error);
-      });
+    register({ email, password, referralCode });
   };
 
   return (
