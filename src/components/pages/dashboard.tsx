@@ -3,35 +3,50 @@ import "../css/dashboard.css";
 import axiosInstance from "../api/axios";
 
 const Dashboard: React.FC = () => {
-  const [userId, setUserId] = useState("67c598163a1330d0f4cec143");
-  const [points, setPoints] = useState<number | "">(3000);
-
-  const handleUpdate = () => {
-    console.log(`User ID: ${userId}, Points: ${points}`);
-    axiosInstance
-      .post(
-        `cms/balance/${userId}`,
-        {
-          Balance: points,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then((response) => {
-        console.log("success:", response.data);
-      })
-      .catch((error) => {
-        console.error("error:", error);
-      });
-  };
+  const [newReferralPoints, setNewReferralPoints] = useState<number>(0);
+  const [platformEarnPercentage, setPlatformEarnPercentage] = useState<number>(0);
+  const [referralEarnPercentage, setReferralEarnPercentage] = useState<number>(0);
+  const [durationFilterData, setDurationFilterData] = useState<number[]>([]);
 
   useEffect(() => {
-
-
+    
+    axiosInstance.get(`/cms/settings`)
+      .then(response => {
+        const data = response.data;
+      
+        setNewReferralPoints(data.new_Referral_Points);
+        setPlatformEarnPercentage(data.platform_earn_percentage);
+        setReferralEarnPercentage(data.referral_earn_percentage);
+        setDurationFilterData(data.duration_Filter_Data);
+      })
+      .catch(error => {
+        console.error("Error fetching data:", error);
+      });
   }, []);
+
+  const handleUpdate = () => {
+  
+    axiosInstance.put(
+      `cms/newSettings`,
+      {
+        new_Referral_Points: newReferralPoints,
+        platform_earn_percentage: platformEarnPercentage,
+        referral_earn_percentage: referralEarnPercentage,
+        duration_Filter_Data: durationFilterData,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
+    .then((response) => {
+      console.log("success:", response.data);
+    })
+    .catch((error) => {
+      console.error("error:", error);
+    });
+  };
 
   return (
     <main>
@@ -39,21 +54,41 @@ const Dashboard: React.FC = () => {
         <h1>Dashboard</h1>
         <div className="dashboard-form">
           <label>
-            User ID:
+            New Referral Points:
             <input
-              type="text"
-              value={userId}
-              onChange={(e) => setUserId(e.target.value)}
+              type="number"
+              value={newReferralPoints}
+              onChange={(e) => setNewReferralPoints(Number(e.target.value))}
             />
           </label>
         </div>
         <div className="dashboard-form">
           <label>
-            Points:
+            Platform Earn Percentage:
             <input
               type="number"
-              value={points}
-              onChange={(e) => setPoints(Number(e.target.value))}
+              value={platformEarnPercentage}
+              onChange={(e) => setPlatformEarnPercentage(Number(e.target.value))}
+            />
+          </label>
+        </div>
+        <div className="dashboard-form">
+          <label>
+            Referral Earn Percentage:
+            <input
+              type="number"
+              value={referralEarnPercentage}
+              onChange={(e) => setReferralEarnPercentage(Number(e.target.value))}
+            />
+          </label>
+        </div>
+        <div className="dashboard-form">
+          <label>
+            Duration Filter Data:
+            <input
+              type="text"
+              value={durationFilterData.join(",")}
+              onChange={(e) => setDurationFilterData(e.target.value.split(",").map(Number))}
             />
           </label>
         </div>
@@ -61,27 +96,6 @@ const Dashboard: React.FC = () => {
           Update
         </button>
       </div>
-
-      {/* <div className="User-list">
-        <table>
-          <thead>
-            <tr>
-              <th>User ID</th>
-              <th>Points</th>
-            </tr>
-          </thead>
-          <tbody>
-            {userList.map((user) => {
-              return (
-                <tr>
-                  <td>{user.userId}</td>
-                  <td>{user.points}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div> */}
     </main>
   );
 };
