@@ -1,17 +1,22 @@
 import { useState } from "react";
 import { register } from "../api/register";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [email, setEmail] = useState("test5@gmail.com");
   const [password, setPassword] = useState("test5");
   const [referralCode, setreferralCode] = useState("cf8cdf");
+  const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Email:", email);
-    console.log("Password:", password);
-    console.log("Referral", referralCode);
-    register({ email, password, referralCode });
+    const response = await register({ email, password, referralCode });
+    if (response.status === 201) {
+      alert("User registered successfully");
+      navigate("/login");
+    } else {
+      console.error("Error registering user:", response);
+    }
   };
 
   return (

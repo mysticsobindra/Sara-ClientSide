@@ -1,16 +1,23 @@
 import React, { useState } from "react";
 import "../css/login.css";
 import login from "../api/login";
+import { useNavigate } from "react-router-dom";
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState("test1@gmail.com");
   const [password, setPassword] = useState("test1");
 
+  const navigate = useNavigate();
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Email:", email);
-    console.log("Password:", password);
-    await login(email, password);
+    const response = await login(email, password);
+    if (!!response) {
+      alert("User logged in successfully");
+      navigate("/dashboard");
+    } else {
+      console.error("Error logging in user:", response);
+    }
   };
 
   return (
