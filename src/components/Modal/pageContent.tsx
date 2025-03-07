@@ -40,14 +40,18 @@ const PageContent: React.FC<props> = ({
             <div className="pill-content active">
               {activeTab === 1 ? (
                 <>
-                  <YourReferrals setIsReferralModalActive={setIsReferralModalActive} />
-                  <TextInfoDepo />
+                  <YourReferrals NoDataMessage={"you haven't referred anyone yet"} setIsReferralModalActive={setIsReferralModalActive} />
+                  {settingsData?.notices ?
+                    <TextInfoDepo message={settingsData?.notices} />
+                    :null
+                  }
+                  
                 </>
               ) : activeTab === 2 ? (
-                <TopReferrals  setIsReferralModalActive={setIsReferralModalActive}/>
+                <TopReferrals NoDataMessage={"data not found"}  setIsReferralModalActive={setIsReferralModalActive}/>
               ) : (
                 <>
-                  <ReferralEarnings setIsReferralModalActive={setIsReferralModalActive} settingsData={settingsData} />
+                  <ReferralEarnings NoDataMessage={"you haven't referred anyone yet"} setIsReferralModalActive={setIsReferralModalActive} settingsData={settingsData} />
                 </>
               )}
             </div>

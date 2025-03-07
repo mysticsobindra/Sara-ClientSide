@@ -8,9 +8,11 @@ import { Settings } from "../types/settings";
 interface props{
   settingsData: Settings | undefined
     setIsReferralModalActive: Dispatch<SetStateAction<boolean>>;
+
+  NoDataMessage:string
 }
 
-const ReferralEarnings:React.FC<props> = ({settingsData,setIsReferralModalActive}) => {
+const ReferralEarnings:React.FC<props> = ({settingsData,setIsReferralModalActive , NoDataMessage}) => {
   const [data, setData] = useState<ReferralEarningsTypes[]>();
   const [activeFilter, setActiveFilter] = useState("All");
   const [activeDuration, setActiveDuration] = useState(7);
@@ -75,7 +77,7 @@ const ReferralEarnings:React.FC<props> = ({settingsData,setIsReferralModalActive
             ) : (
               <tr>
                 <td colSpan={5} className="no-data">
-                  <TableEmptyMessage setIsReferralModalActive={setIsReferralModalActive}/>
+                  <TableEmptyMessage NoDataMessage={NoDataMessage} setIsReferralModalActive={setIsReferralModalActive}/>
                   <div></div>
                 </td>
               </tr>

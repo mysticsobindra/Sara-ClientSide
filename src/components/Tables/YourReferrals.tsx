@@ -7,9 +7,10 @@ import { YourReferral } from "../types/tables";
 
 interface props {
   setIsReferralModalActive: Dispatch<SetStateAction<boolean>>;
+  NoDataMessage:string
 }
 
-const YourReferrals:React.FC<props> = ({setIsReferralModalActive}) => {
+const YourReferrals:React.FC<props> = ({setIsReferralModalActive,NoDataMessage}) => {
   const [data, setData] = useState<YourReferral[]>();
 
   async function fetchData() {
@@ -58,7 +59,7 @@ const YourReferrals:React.FC<props> = ({setIsReferralModalActive}) => {
           ) : (
             <tr>
               <td colSpan={4} className="no-data">
-                <TableEmptyMessage setIsReferralModalActive={setIsReferralModalActive} />
+                <TableEmptyMessage NoDataMessage={NoDataMessage} setIsReferralModalActive={setIsReferralModalActive} />
               </td>
             </tr>
           )}

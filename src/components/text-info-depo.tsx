@@ -1,15 +1,28 @@
+import { useEffect, useState } from "react";
 
-const TextInfoDepo = () => {
+interface props {
+  message: string;
+}
 
-    return (
-        <div className="text-info-depo">
-            <i className="fa fa-info"></i>
-            <div className="text">
-                <p>Referral commission from gameplay of your referred player are not based on the amount of the game but on the amount earned by the platform.</p>
-                <p>Max Cap: 10 Points Per Game.</p>
-            </div>
-        </div>
-    );
+const TextInfoDepo: React.FC<props> = ({ message }) => {
+  const [messageText, setMessageText] = useState<string[]>(message.split("\n"));
+
+  useEffect(() => {
+    setMessageText(message.split("-"));
+  }, [message]);
+
+
+
+  return (
+    <div className="text-info-depo">
+      <i className="fa fa-info"></i>
+      <div className="text">
+        {messageText?.map((item, index) => (
+          <p key={index}>{item}</p>
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default TextInfoDepo;

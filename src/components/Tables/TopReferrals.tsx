@@ -5,9 +5,10 @@ import TableEmptyMessage from "./TableEmptyMessage";
 
 interface props {
   setIsReferralModalActive: Dispatch<SetStateAction<boolean>>;
+  NoDataMessage:string
 }
 
-const TopReferrals :React.FC <props> = ({setIsReferralModalActive}) => {
+const TopReferrals :React.FC <props> = ({setIsReferralModalActive,NoDataMessage}) => {
   const [data, setData] = useState<TopReferralsTypes[]>();
 
   async function fetchData() {
@@ -61,7 +62,7 @@ const TopReferrals :React.FC <props> = ({setIsReferralModalActive}) => {
             <>
               <tr>
                 <td colSpan={4} className="no-data">
-                  <TableEmptyMessage setIsReferralModalActive={setIsReferralModalActive} />
+                  <TableEmptyMessage NoDataMessage={NoDataMessage} setIsReferralModalActive={setIsReferralModalActive} />
                 </td>
               </tr>
             </>
