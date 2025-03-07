@@ -17,8 +17,10 @@ const ReferralCode: React.FC<props> = ({
   const [copySuccess, setCopySuccess] = useState<boolean>(false);
 
   function CopyLinkFunction() {
-    navigator.clipboard.writeText(referralLink);
-    setCopySuccess(true);
+    setTimeout(() => {
+      navigator.clipboard.writeText(referralLink);
+      setCopySuccess(true);
+    }, 3000);
   }
 
   return (

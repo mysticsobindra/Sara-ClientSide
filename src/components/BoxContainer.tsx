@@ -10,16 +10,17 @@ const BoxContainer: React.FC<props> = ({
   settingsData,
   setIsReferralModalActive,
 }) => {
-
   const [referralLink, setReferralLink] = useState<string>(
-     "http://localhost:3000/signup?referral_code=123456"
+    "http://localhost:3000/signup?referral_code=123456"
   );
 
   const [copySuccess, setCopySuccess] = useState<boolean>(false);
 
- function CopyLinkFunction(){
-    navigator.clipboard.writeText(referralLink)
-    setCopySuccess(true)
+  function CopyLinkFunction() {
+    setTimeout(() => {
+      navigator.clipboard.writeText(referralLink);
+      setCopySuccess(true);
+    }, 3000);
   }
 
   return (
@@ -59,8 +60,9 @@ const BoxContainer: React.FC<props> = ({
         <div className="details">
           <label>Invite Friends</label>
           <input type="text" readOnly value={referralLink} />
-          <button onClick={()=> CopyLinkFunction()} className="btn copy">
-            <i className="fa fa-copy" aria-hidden="true"></i>{copySuccess ? "Copied" : "Copy Link"} 
+          <button onClick={() => CopyLinkFunction()} className="btn copy">
+            <i className="fa fa-copy" aria-hidden="true"></i>
+            {copySuccess ? "Copied" : "Copy Link"}
           </button>
         </div>
       </div>
