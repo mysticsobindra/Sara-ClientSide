@@ -1,56 +1,110 @@
+import { useState } from "react";
+import { Settings } from "./types/settings";
 
+interface SelectionFlexerProps {
+  activeFilter: string;
+  setActiveFilter: (filter: string) => void;
+  activeDuration: number;
+  setActiveDuration: (duration: number) => void;
+   settingsData: Settings | undefined
+}
 
-const SelectionFlexer= () => {
+const SelectionFlexer: React.FC<SelectionFlexerProps> = ({
+  settingsData,
+  activeFilter,
+  setActiveFilter,
+  activeDuration,
+  setActiveDuration,
+}) => {
+   
+  const [IsFilter, setIsFilter] = useState(false);
+  const [IsDuration, setIsDuration] = useState(false);
+
   return (
     <div className="selection-flexer multiple">
-    <div className="crash-bet-amt">
+      <div className="crash-bet-amt">
         <div className="custom-select">
-            <label htmlFor="#">Referral Type</label>
-           <div className="select-input">
-              <input type="text" className="select-selected" value="All Games" readOnly/>
-              <i className="icon-down-arrow"></i>
-           </div>
-           <div className="select-items" style={{ display: 'none' }}>
-              <div className="items-holder">
-                 <div className="select-item selected" data-value="All">
-                    <span>All</span>
-                 </div>
-                 <div className="select-item" data-value="New Referral">
-                    <span>New Referral</span>
-                 </div>
-                 <div className="select-item" data-value="Games Played">
-                    <span>Games Played</span>
-                 </div>
-              </div>
-           </div>
+          <label htmlFor="#">Referral Type</label>
+          <div
+            onClick={() => {
+              setIsFilter(!IsFilter);
+            }}
+            className="select-input"
+          >
+            <input
+              type="text"
+              className="select-selected"
+              value={activeFilter}
+              readOnly
+            />
+            <i className="icon-down-arrow"></i>
+          </div>
+          <div
+            className={`select-items ${IsFilter && "show"}`}
+            style={{ display: "none" }}
+          >
+            <div className="items-holder">
+              {settingsData?.filter.map((filter, index) => (
+                <div
+                  onClick={() => {
+                    setActiveFilter(filter);
+                    setIsFilter(false);
+                  }}
+                  key={index}
+                  className={`select-item ${
+                    filter === activeFilter ? "selected" : ""
+                  }`}
+                  data-value={filter}
+                >
+                  <span>{filter}</span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-     </div>
-     <div className="crash-bet-amt">
+      </div>
+      <div className="crash-bet-amt">
         <div className="custom-select">
-            <label htmlFor="#">Duration</label>
-           <div className="select-input">
-              <input type="text" className="select-selected" value="Past 60 Days" readOnly/>
-              <i className="icon-down-arrow"></i>
-           </div>
-           <div className="select-items" style={{ display: 'none' }}>
-              <div className="items-holder">
-                <div className="select-item selected" data-value="Past 60 Days">
-                    <span>Past 60 Days</span>
-                 </div> 
-                <div className="select-item" data-value="Past 30 Days">
-                    <span>Past 30 Days</span>
-                 </div>
-                 <div className="select-item" data-value="Past 7 Days">
-                    <span>Past 7 Days</span>
-                 </div>
-                 <div className="select-item " data-value="Past 24 hours">
-                    <span>Past 24 hours</span>
-                 </div>
-              </div>
-           </div>
+          <label htmlFor="#">Duration</label>
+          <div
+            onClick={() => {
+              setIsDuration(!IsDuration);
+            }}
+            className="select-input"
+          >
+            <input
+              type="text"
+              className="select-selected"
+              value={`Past ${activeDuration} Days`}
+              readOnly
+            />
+            <i className="icon-down-arrow"></i>
+          </div>
+          <div
+            className={`select-items ${IsDuration && "show"}`}
+            style={{ display: "none" }}
+          >
+            <div className="items-holder">
+              {settingsData?.duration_filter_data.map((duration, index) => (
+                <div
+                  onClick={() => {
+                    setActiveDuration(duration);
+                    setIsDuration(false);
+                  }}
+                  key={index}
+                  className={`select-item ${
+                    `Past ${duration} Days` == `Past ${activeDuration} Days` ? "selected" : ""
+                  }`}
+                  data-value={duration}
+                >
+                  <span>{`Past ${duration} Days`}</span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-     </div>
-</div>
+      </div>
+    </div>
   );
 };
 

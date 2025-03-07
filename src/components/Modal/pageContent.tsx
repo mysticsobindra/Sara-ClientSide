@@ -1,40 +1,61 @@
-import React from 'react';
-import PageContentNav from '../pageContentNav';
-import BoxContainer from '../BoxContainer';
-import Tabs from '../Tabs';
-import TokTable from '../tok-table';
-import TextInfoDepo from '../text-info-depo';
-import TokTableTab2 from '../tok-table-tab2';
-import SelectionFlexer from '../selection-flexer';
-import ListTable from '../ListTable';
+import React, { Dispatch, SetStateAction, useState } from "react";
+import PageContentNav from "../pageContentNav";
+import BoxContainer from "../BoxContainer";
+import Tabs from "../Tabs";
+import YourReferrals from "../Tables/YourReferrals";
+import TextInfoDepo from "../text-info-depo";
+import TopReferrals from "../Tables/TopReferrals";
+import ReferralEarnings from "../Tables/ReferralEarnings";
+import { Settings } from "../types/settings";
 
-const PageContent: React.FC = () => {
-    return (
-        <div id="content" className="fluid" >
-        <PageContentNav/>
-        <div className="body-content ">
-          <div className="wallet-container tab-container">
-            <BoxContainer />
-            <Tabs />
-            <div className="pill-container">
-              <div className="pill-content active" id="tab1">
-                <TokTable />
-                <TextInfoDepo />
-              </div>
-              <div className="pill-content" id="tab2">
-                <TokTableTab2 />
-              </div>
-              <div className="pill-content" id="tab3">
-                <SelectionFlexer />
-                <div className="tok-table reff" style={{ overflowX: 'auto' }}>
-                  <ListTable />
-                </div>
-              </div>
+interface props {
+  setIsActive: Dispatch<SetStateAction<boolean>>;
+  setIsReferralModalActive: Dispatch<SetStateAction<boolean>>;
+  IsNavBarActive: boolean;
+  settingsData: Settings | undefined;
+}
+
+const PageContent: React.FC<props> = ({
+  settingsData,
+  setIsReferralModalActive,
+  setIsActive,
+  IsNavBarActive,
+}) => {
+  const [activeTab, setActiveTab] = useState(1);
+
+  return (
+    <div id="content" className="fluid">
+      <PageContentNav
+        setIsActive={setIsActive}
+        IsNavBarActive={IsNavBarActive}
+      />
+      <div className="body-content ">
+        <div className="wallet-container tab-container">
+          <BoxContainer
+            settingsData={settingsData}
+            setIsReferralModalActive={setIsReferralModalActive}
+          />
+          <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
+          <div className="pill-container">
+            <div className="pill-content active">
+              {activeTab === 1 ? (
+                <>
+                  <YourReferrals />
+                  <TextInfoDepo />
+                </>
+              ) : activeTab === 2 ? (
+                <TopReferrals />
+              ) : (
+                <>
+                  <ReferralEarnings settingsData={settingsData} />
+                </>
+              )}
             </div>
           </div>
         </div>
       </div>
-    );
+    </div>
+  );
 };
 
 export default PageContent;

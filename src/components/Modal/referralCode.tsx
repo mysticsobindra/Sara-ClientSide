@@ -1,11 +1,19 @@
+import { Dispatch, SetStateAction } from "react";
+import { Settings } from "../types/settings";
 
-const ReferralCode = () => {
+interface props {
+    setIsReferralModalActive : Dispatch<SetStateAction<boolean>>;
+    settingsData: Settings | undefined;
+}
+
+
+const ReferralCode:React.FC<props> = ({settingsData,setIsReferralModalActive}) => {
     return (
         <div className="content-holder">
         <div className="content">
            <div className="title">
               <h1>Share this link to refer a friend</h1>
-              <div className="close-btn"><i className="icon-plus"></i></div>
+              <div onClick={()=>setIsReferralModalActive(false)} className="close-btn"><i className="icon-plus"></i></div>
            </div>
            <div className="wallet-img-wrapper">
              <div className="details">
@@ -21,8 +29,7 @@ const ReferralCode = () => {
                  </div>
                  <div className="reff-text">
                      <strong>Refer a friend</strong>
-                     <span><i>+5 Points</i> for both you and friend</span>
-                     <button type="button" className="referral"><i className="fa fa-plus"></i>Invite </button>
+                     <span><i>+{settingsData?.new_referral_points} Points</i> for both you and friend</span>
                  </div>
              </div>
              <div className="reff-info">
@@ -31,7 +38,7 @@ const ReferralCode = () => {
                  </div>
                  <div className="reff-text">
                      <strong>Friend Plays, You Earn</strong>
-                     <span><i>Earn 1%</i> from each game friend plays</span>
+                     <span><i>Earn {settingsData?.referral_earn_percentage}%</i> from each game friend plays</span>
                  </div>
              </div>
          </div>

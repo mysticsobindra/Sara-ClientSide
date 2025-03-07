@@ -13,11 +13,6 @@ export const register = async ({ email, password, referralCode }: RegisterParams
             {
                 email,
                 password,
-            },
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
             }
         );
         console.log('Registration successful:', response.data);

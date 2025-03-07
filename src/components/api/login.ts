@@ -8,11 +8,6 @@ const login = async (email:string, password:string) => {
                 email: email,
                 password: password,
             },
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            }
         );
         console.log('Login successful:', response.data);
         return response.data;

@@ -1,8 +1,13 @@
-import React from 'react';
-const Navbar: React.FC = () => {
+
+interface NavbarProps {
+    IsNavBarActive: boolean;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ IsNavBarActive }) => {
+
     return (
         <>
-            <nav id="sidebar" className="game-navbar">
+            <nav id="sidebar"  className={`game-navbar ${IsNavBarActive && 'active'}`}>
                 <ul className="list-unstyled components mb-5">
                     <li className="token-platform">
                         <a href="#">
