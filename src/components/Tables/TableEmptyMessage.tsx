@@ -1,12 +1,16 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 
-const TableEmptyMessage: React.FC = () => {
+interface props {
+  setIsReferralModalActive: Dispatch<SetStateAction<boolean>>;
+}
+
+const TableEmptyMessage: React.FC<props> = ({setIsReferralModalActive}) => {
   return (
   
         <div className="no-tickets">
           <img src="assets/images/ghost.png" alt="" />
           <span>You have not referred anyone yet.</span>
-          <button className="referral">Refer & Earn Now</button>
+          <button onClick={()=> setIsReferralModalActive(true)} className="referral">Refer & Earn Now</button>
         </div>
     
   );

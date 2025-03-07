@@ -1,9 +1,13 @@
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { TopReferralsTypes } from "../types/tables";
 import { TopReferralsApi } from "../api/table";
 import TableEmptyMessage from "./TableEmptyMessage";
 
-const TopReferrals = () => {
+interface props {
+  setIsReferralModalActive: Dispatch<SetStateAction<boolean>>;
+}
+
+const TopReferrals :React.FC <props> = ({setIsReferralModalActive}) => {
   const [data, setData] = useState<TopReferralsTypes[]>();
 
   async function fetchData() {
@@ -57,7 +61,7 @@ const TopReferrals = () => {
             <>
               <tr>
                 <td colSpan={4} className="no-data">
-                  <TableEmptyMessage />
+                  <TableEmptyMessage setIsReferralModalActive={setIsReferralModalActive} />
                 </td>
               </tr>
             </>

@@ -1,11 +1,15 @@
 // import TableEmptyMessage from "./TableEmptyMessage";
 
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { YourReferralApi } from "../api/table";
 import TableEmptyMessage from "./TableEmptyMessage";
 import { YourReferral } from "../types/tables";
 
-const YourReferrals = () => {
+interface props {
+  setIsReferralModalActive: Dispatch<SetStateAction<boolean>>;
+}
+
+const YourReferrals:React.FC<props> = ({setIsReferralModalActive}) => {
   const [data, setData] = useState<YourReferral[]>();
 
   async function fetchData() {
@@ -54,7 +58,7 @@ const YourReferrals = () => {
           ) : (
             <tr>
               <td colSpan={4} className="no-data">
-                <TableEmptyMessage />
+                <TableEmptyMessage setIsReferralModalActive={setIsReferralModalActive} />
               </td>
             </tr>
           )}

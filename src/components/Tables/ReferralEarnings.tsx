@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { ReferralEarningApi } from "../api/table";
 import SelectionFlexer from "../selection-flexer";
 import { ReferralEarningsTypes } from "../types/tables";
@@ -7,9 +7,10 @@ import { Settings } from "../types/settings";
 
 interface props{
   settingsData: Settings | undefined
+    setIsReferralModalActive: Dispatch<SetStateAction<boolean>>;
 }
 
-const ReferralEarnings:React.FC<props> = ({settingsData}) => {
+const ReferralEarnings:React.FC<props> = ({settingsData,setIsReferralModalActive}) => {
   const [data, setData] = useState<ReferralEarningsTypes[]>();
   const [activeFilter, setActiveFilter] = useState("All");
   const [activeDuration, setActiveDuration] = useState(7);
@@ -73,8 +74,9 @@ const ReferralEarnings:React.FC<props> = ({settingsData}) => {
               ))
             ) : (
               <tr>
-                <td colSpan={4} className="no-data">
-                  <TableEmptyMessage />
+                <td colSpan={5} className="no-data">
+                  <TableEmptyMessage setIsReferralModalActive={setIsReferralModalActive}/>
+                  <div></div>
                 </td>
               </tr>
             )}

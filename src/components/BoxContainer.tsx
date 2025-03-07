@@ -12,7 +12,7 @@ const BoxContainer: React.FC<props> = ({
 }) => {
 
   const [referralLink, setReferralLink] = useState<string>(
-    "https://www.flaticon.com/search?word=coins&color=color"
+     "http://localhost:3000/signup?referral_code=123456"
   );
 
   const [copySuccess, setCopySuccess] = useState<boolean>(false);
