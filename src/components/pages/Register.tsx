@@ -11,7 +11,7 @@ const Register = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const response = await register({ email, password, referralCode });
-    if (response.status === 201) {
+    if (!! response) {
       alert("User registered successfully");
       navigate("/login");
     } else {
